@@ -67,6 +67,9 @@ namespace guraburuEX.ViewModels
 		{
 			_MainWindowModel		= new MainWindowModel();
 			ComicViewerViewModel	= new ComicViewerViewModel();
+
+			_MainWindowModel.Height = _ComicViewerViewModel.Height;
+			_MainWindowModel.Width = _ComicViewerViewModel.Width + 20;
 		}
 	}
 }

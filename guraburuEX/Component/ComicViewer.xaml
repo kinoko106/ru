@@ -5,11 +5,23 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:guraburuEX.Component"
              xmlns:vm="clr-namespace:guraburuEX.ViewModels"
+             xmlns:component="clr-namespace:guraburuEX.Component"
              d:DataContext="{d:DesignInstance {x:Type vm:ComicViewerViewModel},IsDesignTimeCreatable=True}"
              d:DesignHeight="{Binding Height}"
              d:DesignWidth="{Binding Width}"
-             mc:Ignorable="d" Height="{Binding Height,Mode=TwoWay}" Width="{Binding Width,Mode=TwoWay}">
-    <Grid Background="AliceBlue">
-        <TextBlock Text="{Binding Text}"/>
-    </Grid>
+             mc:Ignorable="d" 
+             Height="{Binding Height,Mode=TwoWay}" 
+             Width="{Binding Width,Mode=TwoWay}">
+    <StackPanel Orientation="Vertical">
+        <StackPanel>
+            <ScrollViewer Height="{Binding ComicHeight}">
+                <Grid Background="AliceBlue">
+                    <Image Source="{Binding Image}"/>
+                </Grid>
+            </ScrollViewer>
+        </StackPanel>
+        <StackPanel Height="{Binding SelectorHeight}">
+            <component:EpisodeSelector DataContext="{Binding EpisodeSelectorViewModel}"></component:EpisodeSelector>
+        </StackPanel>
+    </StackPanel>
 </UserControl>

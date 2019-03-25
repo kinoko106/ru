@@ -42,6 +42,7 @@
       <HintPath>..\packages\LivetCask.1.3.1.0\lib\net45\Microsoft.Expression.Interactions.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\LivetCask.1.3.1.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
@@ -67,11 +68,21 @@
     <Compile Include="Component\ComicViewer.xaml.cs">
       <DependentUpon>ComicViewer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Component\EpisodeSelector.xaml.cs">
+      <DependentUpon>EpisodeSelector.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Model\ComicViewerModel.cs" />
+    <Compile Include="Model\EpisodeSelectorModel.cs" />
     <Compile Include="Model\MainWindowModel.cs" />
+    <Compile Include="Model\Util\AppConfigUtil.cs" />
     <Compile Include="ViewModels\ComicViewerViewModel.cs" />
+    <Compile Include="ViewModels\EpisodeSelectorViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Page Include="Component\ComicViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Component\EpisodeSelector.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
