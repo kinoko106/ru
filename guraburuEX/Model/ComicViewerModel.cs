@@ -7,6 +7,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 using guraburuEX.Model.Util;
+using guraburuEX.ViewModels;
 
 namespace guraburuEX.Model
 {
@@ -18,30 +19,28 @@ namespace guraburuEX.Model
 		public BitmapImage	 Image			{ get; set; }
 		public GuraburuImage GuraburuImege	{ get; set; }
 
+		private ComicViewerViewModel _Parent;
+
 		public ComicViewerModel()
 		{
 			InitWindow();
 		}
 
-		public void InitWindow()
+		public ComicViewerModel(ComicViewerViewModel inParent)
 		{
-			Width		  = AppConfigUtil.GetAppSettingInt("ImageWidth", 630);
-			Height		  = AppConfigUtil.GetAppSettingInt("ImageHeight", 1260);
-			GuraburuImege = new GuraburuImage(AppConfigUtil.GetAppSettingString("BaseURL"));
-			GuraburuImege.Episode = 1;
+			_Parent = inParent;
+			InitWindow();
 		}
 
-		public void GetImageSource()
+		public void InitWindow()
 		{
+			_Parent.Width	= AppConfigUtil.GetAppSettingInt("ImageWidth", 630);
+			_Parent.Height	= AppConfigUtil.GetAppSettingInt("ImageHeight", 1260);
+
+			GuraburuImege	= new GuraburuImage(AppConfigUtil.GetAppSettingString("BaseURL"));
 			GuraburuImege.Episode = 1;
 
-			Uri uri = new Uri(GuraburuImege.ImageURL);
-			var source = new BitmapImage();
-			source.BeginInit();
-			source.UriSource = uri;
-			source.EndInit();
-
-			Image = source;
+			GetImageSource(GuraburuImege.Episode);
 		}
 
 		public void GetImageSource(int inEpisodeNum)
@@ -54,7 +53,7 @@ namespace guraburuEX.Model
 			source.UriSource = uri;
 			source.EndInit();
 
-			Image = source;
+			_Parent.Image = source;
 		}
 	}
 

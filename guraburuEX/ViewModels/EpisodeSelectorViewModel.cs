@@ -12,7 +12,10 @@ namespace guraburuEX.ViewModels
 {
 	class EpisodeSelectorViewModel : ViewModel
 	{
+		// 依存クラス
 		EpisodeSelectorModel _EpisodeSelectorModel;
+
+		ComicViewerModel _ComicViewerModel;
 
 		#region Width
 		private int _Width;
@@ -46,12 +49,33 @@ namespace guraburuEX.ViewModels
 		}
 		#endregion
 
-		public EpisodeSelectorViewModel()
+		#region EpisodeText
+		private string _EpisodeText;
+		public string EpisodeText
 		{
-			_EpisodeSelectorModel = new EpisodeSelectorModel();
+			get
+			{ return _EpisodeText; }
+			set
+			{
+				if (_EpisodeText == value)
+					return;
+				_EpisodeText = value;
 
-			Width = _EpisodeSelectorModel.Width;
-			Height = _EpisodeSelectorModel.Height;
+				UpdateEpisode(_EpisodeText);
+
+				RaisePropertyChanged(nameof(EpisodeText));
+			}
+		}
+		#endregion
+
+		public EpisodeSelectorViewModel(ComicViewerModel inComicViewerModel)
+		{
+			_EpisodeSelectorModel = new EpisodeSelectorModel(this, inComicViewerModel);
+		}
+
+		private void UpdateEpisode(string inEpisodeString)
+		{
+			_EpisodeSelectorModel.UpdateEpisode(inEpisodeString);
 		}
 	}
 }

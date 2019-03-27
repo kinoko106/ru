@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 using Livet;
 using guraburuEX.Model;
 
+using Reactive;
+using Reactive.Bindings;
+
 namespace guraburuEX.ViewModels
 {
 	class MainWindowViewModel : ViewModel
@@ -68,8 +71,8 @@ namespace guraburuEX.ViewModels
 			_MainWindowModel		= new MainWindowModel();
 			ComicViewerViewModel	= new ComicViewerViewModel();
 
-			_MainWindowModel.Height = _ComicViewerViewModel.Height;
-			_MainWindowModel.Width = _ComicViewerViewModel.Width + 20;
+			//_MainWindowModel.Height = _ComicViewerViewModel.Height;
+			//_MainWindowModel.Width = _ComicViewerViewModel.Width + 20;
 		}
 	}
 }

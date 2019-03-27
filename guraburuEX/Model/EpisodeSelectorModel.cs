@@ -1,4 +1,5 @@
 ﻿using guraburuEX.Model.Util;
+using guraburuEX.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,13 +10,28 @@ namespace guraburuEX.Model
 {
 	class EpisodeSelectorModel
 	{
+		EpisodeSelectorViewModel _Parent;
+		ComicViewerModel _ComicViewerModel;
+
 		public int Width	{ get; set; }
 		public int Height	{ get; set; }
 
-		public EpisodeSelectorModel()
+		public EpisodeSelectorModel(EpisodeSelectorViewModel inParent,ComicViewerModel  inComicViewerModel)
 		{
-			Height	= 40;
-			Width	= AppConfigUtil.GetAppSettingInt("ImageWidth", 630);
+			_Parent			  = inParent;
+			_ComicViewerModel = inComicViewerModel;
+
+			_Parent.Height = 40;
+			_Parent.Width = AppConfigUtil.GetAppSettingInt("ImageWidth", 420);
+		}
+
+		public void UpdateEpisode(string inEpisodeString)
+		{
+			int episode = 0;
+			if (int.TryParse(inEpisodeString, out episode))
+			{
+				_ComicViewerModel.GetImageSource(episode);
+			}
 		}
 	}
 }

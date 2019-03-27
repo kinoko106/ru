@@ -34,15 +34,16 @@ namespace guraburuEX.ViewModels
 
 		// Parameter
 		#region Width
+		private int _Width;
 		public int Width
 		{
 			get
-			{ return _ComicViewerModel.Width; }
+			{ return _Width; }
 			set
 			{
-				if (_ComicViewerModel.Width == value)
+				if (_Width == value)
 					return;
-				_ComicViewerModel.Width = value;
+				_Width = value;
 				RaisePropertyChanged(nameof(Width));
 			}
 		}
@@ -60,38 +61,6 @@ namespace guraburuEX.ViewModels
 					return;
 				_Height = value;
 				RaisePropertyChanged(nameof(Height));
-			}
-		}
-		#endregion
-
-		#region ComicHeight
-		private int _ComicHeight;
-		public int ComicHeight
-		{
-			get
-			{ return _ComicHeight; }
-			set
-			{
-				if (_ComicHeight == value)
-					return;
-				_ComicHeight = value;
-				RaisePropertyChanged(nameof(ComicHeight));
-			}
-		}
-		#endregion
-
-		#region SelectorHeight
-		private int _SelectorHeight;
-		public int SelectorHeight
-		{
-			get
-			{ return _SelectorHeight; }
-			set
-			{
-				if (_SelectorHeight == value)
-					return;
-				_SelectorHeight = value;
-				RaisePropertyChanged(nameof(SelectorHeight));
 			}
 		}
 		#endregion
@@ -114,16 +83,8 @@ namespace guraburuEX.ViewModels
 
 		public ComicViewerViewModel()
 		{
-			_EpisodeSelectorViewModel = new EpisodeSelectorViewModel();
-
-			_ComicViewerModel = new ComicViewerModel();
-			_ComicViewerModel.GetImageSource();
-
-			Height			= _EpisodeSelectorViewModel.Height + _ComicViewerModel.Height;
-			Width			= _ComicViewerModel.Width;
-			Image			= _ComicViewerModel.Image;
-			ComicHeight		= _ComicViewerModel.Height;
-			SelectorHeight	= _EpisodeSelectorViewModel.Height;
+			_ComicViewerModel		  = new ComicViewerModel(this);
+			_EpisodeSelectorViewModel = new EpisodeSelectorViewModel(_ComicViewerModel);
 		}
 	}
 }

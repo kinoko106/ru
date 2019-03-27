@@ -10,17 +10,16 @@
              d:DesignHeight="{Binding Height}"
              d:DesignWidth="{Binding Width}"
              mc:Ignorable="d" 
-             Height="{Binding Height,Mode=TwoWay}" 
-             Width="{Binding Width,Mode=TwoWay}">
+             >
     <StackPanel Orientation="Vertical">
         <StackPanel>
-            <ScrollViewer Height="{Binding ComicHeight}">
+            <ScrollViewer Height="{Binding Height}"  Width="{Binding Width}">
                 <Grid Background="AliceBlue">
                     <Image Source="{Binding Image}"/>
                 </Grid>
             </ScrollViewer>
         </StackPanel>
-        <StackPanel Height="{Binding SelectorHeight}">
+        <StackPanel>
             <component:EpisodeSelector DataContext="{Binding EpisodeSelectorViewModel}"></component:EpisodeSelector>
         </StackPanel>
     </StackPanel>

@@ -12,7 +12,9 @@
              Height="{Binding Height,Mode=TwoWay}" 
              Width="{Binding Width,Mode=TwoWay}"
              >
-    <Grid Background="LightGray">
-             
-    </Grid>
+    <StackPanel Orientation="Horizontal" Background="LightGray">
+        <Button Width="40" Content="◀"/>
+        <TextBox Width="60" Text="{Binding EpisodeText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" />
+        <Button Width="40" Content="▶" />
+    </StackPanel>
 </UserControl>
