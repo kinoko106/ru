@@ -20,6 +20,7 @@ namespace guraburuEX.Model
 		public GuraburuImage GuraburuImege	{ get; set; }
 
 		private ComicViewerViewModel _Parent;
+		private bool m_IsGettingImage = false;
 
 		public ComicViewerModel()
 		{
@@ -38,13 +39,15 @@ namespace guraburuEX.Model
 			_Parent.Height	= AppConfigUtil.GetAppSettingInt("ImageHeight", 1260);
 
 			GuraburuImege	= new GuraburuImage(AppConfigUtil.GetAppSettingString("BaseURL"));
-			GuraburuImege.Episode = 1;
-
-			GetImageSource(GuraburuImege.Episode);
+			GetImageSource(1);
 		}
 
 		public void GetImageSource(int inEpisodeNum)
 		{
+			if (GuraburuImege.Episode == inEpisodeNum)
+			{
+				return;
+			}
 			GuraburuImege.Episode = inEpisodeNum;
 
 			Uri uri = new Uri(GuraburuImege.ImageURL);
@@ -54,6 +57,35 @@ namespace guraburuEX.Model
 			source.EndInit();
 
 			_Parent.Image = source;
+		}
+
+		public async void GetImageSourceAsync(int inEpisodeNum)
+		{
+			if(GuraburuImege.Episode == inEpisodeNum)
+			{
+				return;
+			}
+			if (m_IsGettingImage)
+			{
+				return;
+			}
+
+			GuraburuImege.Episode = inEpisodeNum;
+			m_IsGettingImage = true;
+
+			await Task.Run(()=>
+			{
+				System.Threading.Thread.Sleep(1000);
+
+				Uri uri = new Uri(GuraburuImege.ImageURL);
+				var source = new BitmapImage();
+				source.BeginInit();
+				source.UriSource = uri;
+				source.EndInit();
+
+				_Parent.Image = source;
+				m_IsGettingImage = false;
+			});
 		}
 	}
 

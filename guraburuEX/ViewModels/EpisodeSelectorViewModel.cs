@@ -17,6 +17,7 @@ namespace guraburuEX.ViewModels
 
 		ComicViewerModel _ComicViewerModel;
 
+		// BindingParameters
 		#region Width
 		private int _Width;
 		public int Width
@@ -68,9 +69,12 @@ namespace guraburuEX.ViewModels
 		}
 		#endregion
 
+		// Commands
+
 		public EpisodeSelectorViewModel(ComicViewerModel inComicViewerModel)
 		{
 			_EpisodeSelectorModel = new EpisodeSelectorModel(this, inComicViewerModel);
+			EpisodeText = inComicViewerModel.GuraburuImege.Episode.ToString();
 		}
 
 		private void UpdateEpisode(string inEpisodeString)
