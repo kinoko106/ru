@@ -59,6 +59,24 @@ namespace guraburuEX.Model
 			_Parent.Image = source;
 		}
 
+		public void TurnEpisode(int inAdditionNumber)
+		{
+			GuraburuImege.Episode += inAdditionNumber;
+
+			Uri uri = new Uri(GuraburuImege.ImageURL);
+			var source = new BitmapImage();
+			source.BeginInit();
+			source.UriSource = uri;
+			source.EndInit();
+
+			_Parent.Image = source;
+		}
+
+		public int GetAddedEpisode(int inAdditionNumber)
+		{
+			return (GuraburuImege.Episode + inAdditionNumber) < 1 ? 1 : (GuraburuImege.Episode + inAdditionNumber);
+		}
+
 		public async void GetImageSourceAsync(int inEpisodeNum)
 		{
 			if(GuraburuImege.Episode == inEpisodeNum)
@@ -95,14 +113,25 @@ namespace guraburuEX.Model
 	public class GuraburuImage
 	{
 		string _ImageURL;
+		int _Episode;
 
 		public GuraburuImage(string inURL)
 		{
 			_ImageURL = inURL;
-			Episode = 0;
+			_Episode = 0;
 		}
 
-		public int Episode { get; set; }
+		public int Episode
+		{
+			get { return _Episode; }
+			set
+			{
+				if (value > 0)
+				{
+					_Episode = value;
+				}
+			}
+		}
 
 		public string ImageURL
 		{

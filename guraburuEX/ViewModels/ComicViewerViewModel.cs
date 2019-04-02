@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 using Livet;
+using Livet.Commands;
+
 using guraburuEX.Model;
-using System.Windows.Media.Imaging;
 
 namespace guraburuEX.ViewModels
 {

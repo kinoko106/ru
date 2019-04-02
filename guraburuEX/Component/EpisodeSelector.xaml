@@ -13,8 +13,8 @@
              Width="{Binding Width,Mode=TwoWay}"
              >
     <StackPanel Orientation="Horizontal" Background="LightGray">
-        <Button Width="40" Content="◀"/>
+        <Button x:Name="Increase" Width="40" Content="◀" Command="{Binding SelectorCommand}" CommandParameter="1"/>
         <TextBox Width="60" Text="{Binding EpisodeText,Mode=TwoWay,UpdateSourceTrigger=LostFocus}" TextAlignment="Center" />
-        <Button Width="40" Content="▶" />
+        <Button x:Name="Decrease" Width="40" Content="▶" Command="{Binding SelectorCommand}" CommandParameter="-1"/>
     </StackPanel>
 </UserControl>

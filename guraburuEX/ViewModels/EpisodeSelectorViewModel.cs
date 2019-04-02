@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 using Livet;
+using Livet.Commands;
+
 using guraburuEX.Model;
 using guraburuEX.Model.Util;
+
 
 namespace guraburuEX.ViewModels
 {
@@ -70,6 +74,20 @@ namespace guraburuEX.ViewModels
 		#endregion
 
 		// Commands
+		#region SelectorCommand
+		ListenerCommand<string> _SelectorCommand;
+		public ICommand SelectorCommand
+		{
+			get
+			{
+				if (_SelectorCommand == null)
+				{
+					_SelectorCommand = new ListenerCommand<string>(TurnEpisode);
+				}
+				return _SelectorCommand;
+			}
+		}
+		#endregion
 
 		public EpisodeSelectorViewModel(ComicViewerModel inComicViewerModel)
 		{
@@ -80,6 +98,11 @@ namespace guraburuEX.ViewModels
 		private void UpdateEpisode(string inEpisodeString)
 		{
 			_EpisodeSelectorModel.UpdateEpisode(inEpisodeString);
+		}
+
+		private void TurnEpisode(string inAdditionNumberText)
+		{
+			EpisodeText = _EpisodeSelectorModel.TurnEpisode(inAdditionNumberText);
 		}
 	}
 }

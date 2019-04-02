@@ -33,5 +33,15 @@ namespace guraburuEX.Model
 				_ComicViewerModel.GetImageSource(episode);
 			}
 		}
+
+		public string TurnEpisode(string inAdditionNumberText)
+		{
+			int episode = 0;
+			if (int.TryParse(inAdditionNumberText, out episode))
+			{
+				episode = _ComicViewerModel.GetAddedEpisode(episode);
+			}
+			return episode.ToString();
+		}
 	}
 }
