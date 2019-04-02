@@ -10,7 +10,7 @@
         d:DataContext="{d:DesignInstance {x:Type vm:MainWindowViewModel},IsDesignTimeCreatable=True}"
         d:DesignHeight="{Binding Height}"
         d:DesignWidth="{Binding Width}"
-        Title="MainWindow" SizeToContent = "WidthAndHeight">
+        Title="る !" SizeToContent = "WidthAndHeight">
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>

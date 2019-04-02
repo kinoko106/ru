@@ -4,17 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
+using System.Windows.Input;
 
 using Livet;
 using Livet.Commands;
 
 using guraburuEX.Model;
+using Livet.EventListeners;
+
 
 namespace guraburuEX.ViewModels
 {
 	class ComicViewerViewModel : ViewModel
 	{
 		ComicViewerModel _ComicViewerModel;
+
+		PropertyChangedEventListener listener;
 
 		// viewmodel
 		#region EpisodeSelectorViewModel
@@ -68,25 +73,55 @@ namespace guraburuEX.ViewModels
 		#endregion
 
 		#region Image
-		public BitmapImage _Image;
-		public BitmapImage Image
+		//public BitmapImage _Image;
+		//public BitmapImage Image
+		//{
+		//	get
+		//	{ return _Image; }
+		//	set
+		//	{
+		//		if (_Image == value)
+		//			return;
+		//		_Image = value;
+		//		RaisePropertyChanged(nameof(Image));
+		//	}
+		//}
+		#endregion
+		#region SelectorCommand
+		ViewModelCommand _OnButton;
+		public ViewModelCommand OnButton
 		{
 			get
-			{ return _Image; }
-			set
 			{
-				if (_Image == value)
-					return;
-				_Image = value;
-				RaisePropertyChanged(nameof(Image));
+				if (_OnButton == null)
+				{
+					_OnButton = new ViewModelCommand(OnButtonMethod);
+				}
+				return _OnButton;
 			}
 		}
 		#endregion
 
+		public BitmapImage Image { get { return _ComicViewerModel.Image; } }
+		public int Episode { get { return _ComicViewerModel.Episode; } }
+		public string TestValue { get { return _ComicViewerModel.Episode.ToString(); } }
+
 		public ComicViewerViewModel()
 		{
-			_ComicViewerModel		  = new ComicViewerModel(this);
+			_ComicViewerModel		  = new ComicViewerModel();
 			_EpisodeSelectorViewModel = new EpisodeSelectorViewModel(_ComicViewerModel);
+
+			listener = new PropertyChangedEventListener(_ComicViewerModel)
+			{
+				() => _ComicViewerModel.Episode,
+				(_,__)=> RaisePropertyChanged(()=> Image),
+				(_,__)=> RaisePropertyChanged(()=> TestValue)
+			};
+		}
+
+		public void OnButtonMethod()
+		{
+			_ComicViewerModel.Episode++;
 		}
 	}
 }

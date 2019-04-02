@@ -13,9 +13,14 @@
              >
     <StackPanel Orientation="Vertical">
         <StackPanel>
-            <ScrollViewer Height="{Binding Height}"  Width="{Binding Width}">
+            <TextBox x:Name="URLText" Text="{Binding TestValue,Mode=OneWay}"></TextBox>
+            <Button Content="button" Command="{Binding OnButton}"></Button>
+        </StackPanel>
+        <StackPanel>
+            <!--<ScrollViewer Height="{Binding Height}"  Width="{Binding Width}">-->
+            <ScrollViewer Height="800"  Width="480">
                 <Grid Background="AliceBlue">
-                    <Image Source="{Binding Image}"/>
+                    <Image Source="{Binding Image,Mode=OneWay}"/>
                 </Grid>
             </ScrollViewer>
         </StackPanel>

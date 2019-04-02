@@ -102,7 +102,7 @@ namespace guraburuEX.ViewModels
 
 		private void TurnEpisode(string inAdditionNumberText)
 		{
-			EpisodeText = _EpisodeSelectorModel.TurnEpisode(inAdditionNumberText);
+			//EpisodeText = _EpisodeSelectorModel.TurnEpisode(inAdditionNumberText);
 		}
 	}
 }

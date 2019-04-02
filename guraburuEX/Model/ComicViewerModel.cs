@@ -9,101 +9,58 @@ using System.Windows.Media.Imaging;
 using guraburuEX.Model.Util;
 using guraburuEX.ViewModels;
 
+using Livet;
+
 namespace guraburuEX.Model
 {
-	class ComicViewerModel
+	class ComicViewerModel : NotificationObject
 	{
 		public int			 Width			{ get; set; }
 		public int			 Height			{ get; set; }
-		public int			 Episode		{ get; set; }
-		public BitmapImage	 Image			{ get; set; }
 		public GuraburuImage GuraburuImege	{ get; set; }
 
-		private ComicViewerViewModel _Parent;
-		private bool m_IsGettingImage = false;
+		public int Episode
+		{
+			get { return GuraburuImege.Episode; }
+			set
+			{
+				GuraburuImege.Episode = value;
+				RaisePropertyChanged();
+			}
+		}
+
+		public BitmapImage Image
+		{
+			get { return GuraburuImege.Image; }
+		}
+
+		#region testValue
+		private int _testValueh;
+		public int testValue
+		{
+			get
+			{ return _testValueh; }
+			set
+			{
+				if (_testValueh == value)
+					return;
+				_testValueh = value;
+				RaisePropertyChanged();
+			}
+		}
+		#endregion
 
 		public ComicViewerModel()
 		{
 			InitWindow();
 		}
 
-		public ComicViewerModel(ComicViewerViewModel inParent)
-		{
-			_Parent = inParent;
-			InitWindow();
-		}
-
 		public void InitWindow()
 		{
-			_Parent.Width	= AppConfigUtil.GetAppSettingInt("ImageWidth", 630);
-			_Parent.Height	= AppConfigUtil.GetAppSettingInt("ImageHeight", 1260);
+			Width	= AppConfigUtil.GetAppSettingInt("ImageWidth", 630);
+			Height	= AppConfigUtil.GetAppSettingInt("ImageHeight", 1260);
 
-			GuraburuImege	= new GuraburuImage(AppConfigUtil.GetAppSettingString("BaseURL"));
-			GetImageSource(1);
-		}
-
-		public void GetImageSource(int inEpisodeNum)
-		{
-			if (GuraburuImege.Episode == inEpisodeNum)
-			{
-				return;
-			}
-			GuraburuImege.Episode = inEpisodeNum;
-
-			Uri uri = new Uri(GuraburuImege.ImageURL);
-			var source = new BitmapImage();
-			source.BeginInit();
-			source.UriSource = uri;
-			source.EndInit();
-
-			_Parent.Image = source;
-		}
-
-		public void TurnEpisode(int inAdditionNumber)
-		{
-			GuraburuImege.Episode += inAdditionNumber;
-
-			Uri uri = new Uri(GuraburuImege.ImageURL);
-			var source = new BitmapImage();
-			source.BeginInit();
-			source.UriSource = uri;
-			source.EndInit();
-
-			_Parent.Image = source;
-		}
-
-		public int GetAddedEpisode(int inAdditionNumber)
-		{
-			return (GuraburuImege.Episode + inAdditionNumber) < 1 ? 1 : (GuraburuImege.Episode + inAdditionNumber);
-		}
-
-		public async void GetImageSourceAsync(int inEpisodeNum)
-		{
-			if(GuraburuImege.Episode == inEpisodeNum)
-			{
-				return;
-			}
-			if (m_IsGettingImage)
-			{
-				return;
-			}
-
-			GuraburuImege.Episode = inEpisodeNum;
-			m_IsGettingImage = true;
-
-			await Task.Run(()=>
-			{
-				System.Threading.Thread.Sleep(1000);
-
-				Uri uri = new Uri(GuraburuImege.ImageURL);
-				var source = new BitmapImage();
-				source.BeginInit();
-				source.UriSource = uri;
-				source.EndInit();
-
-				_Parent.Image = source;
-				m_IsGettingImage = false;
-			});
+			GuraburuImege = new GuraburuImage(AppConfigUtil.GetAppSettingString("BaseURL"), 1);
 		}
 	}
 
@@ -112,13 +69,14 @@ namespace guraburuEX.Model
 	/// </summary>
 	public class GuraburuImage
 	{
-		string _ImageURL;
+		BitmapImage _ImageSource;
+		readonly string _BaseImageURL;
 		int _Episode;
 
-		public GuraburuImage(string inURL)
+		public GuraburuImage(string inBaseURL,int inEpisode)
 		{
-			_ImageURL = inURL;
-			_Episode = 0;
+			_BaseImageURL = inBaseURL;
+			Episode = inEpisode;
 		}
 
 		public int Episode
@@ -129,14 +87,27 @@ namespace guraburuEX.Model
 				if (value > 0)
 				{
 					_Episode = value;
+					UpdateImageSource(_Episode);
 				}
 			}
 		}
 
 		public string ImageURL
 		{
-			get { return _ImageURL + "_" + Episode.ToString() + ".jpg"; }
-			set { _ImageURL = value; }
+			get { return _BaseImageURL + "_" + Episode.ToString() + ".jpg"; }
+		}
+
+		public BitmapImage Image { get { return _ImageSource; } }
+
+		private void UpdateImageSource(int inEpisode)
+		{
+			Uri uri = new Uri(ImageURL);
+			var source = new BitmapImage();
+			source.BeginInit();
+			source.UriSource = uri;
+			source.EndInit();
+
+			_ImageSource = source;
 		}
 	}
 }

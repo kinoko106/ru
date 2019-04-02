@@ -27,21 +27,23 @@ namespace guraburuEX.Model
 
 		public void UpdateEpisode(string inEpisodeString)
 		{
-			int episode = 0;
-			if (int.TryParse(inEpisodeString, out episode))
-			{
-				_ComicViewerModel.GetImageSource(episode);
-			}
+			//int episode = 0;
+			//if (int.TryParse(inEpisodeString, out episode))
+			//{
+			//	_ComicViewerModel.GetImageSource(episode);
+			//}
 		}
 
 		public string TurnEpisode(string inAdditionNumberText)
 		{
-			int episode = 0;
-			if (int.TryParse(inAdditionNumberText, out episode))
-			{
-				episode = _ComicViewerModel.GetAddedEpisode(episode);
-			}
-			return episode.ToString();
+			//int episode = 0;
+			//if (int.TryParse(inAdditionNumberText, out episode))
+			//{
+			//	episode = _ComicViewerModel.GetAddedEpisode(episode);
+			//}
+			//return episode.ToString();
+
+			return string.Empty;
 		}
 	}
 }
