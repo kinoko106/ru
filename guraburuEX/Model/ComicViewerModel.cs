@@ -17,7 +17,7 @@ namespace guraburuEX.Model
 	{
 		public int			 Width			{ get; set; }
 		public int			 Height			{ get; set; }
-		public GuraburuImage GuraburuImege	{ get; set; }
+		public GuraburuImage GuraburuImege	{ get; set; } 
 
 		public int Episode
 		{
@@ -34,22 +34,6 @@ namespace guraburuEX.Model
 			get { return GuraburuImege.Image; }
 		}
 
-		#region testValue
-		private int _testValueh;
-		public int testValue
-		{
-			get
-			{ return _testValueh; }
-			set
-			{
-				if (_testValueh == value)
-					return;
-				_testValueh = value;
-				RaisePropertyChanged();
-			}
-		}
-		#endregion
-
 		public ComicViewerModel()
 		{
 			InitWindow();
@@ -61,6 +45,11 @@ namespace guraburuEX.Model
 			Height	= AppConfigUtil.GetAppSettingInt("ImageHeight", 1260);
 
 			GuraburuImege = new GuraburuImage(AppConfigUtil.GetAppSettingString("BaseURL"), 1);
+		}
+
+		public void UpdateEpisode(int inDistans)
+		{
+			GuraburuImege.Episode += inDistans;
 		}
 	}
 

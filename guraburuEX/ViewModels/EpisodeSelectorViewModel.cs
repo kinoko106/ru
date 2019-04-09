@@ -19,8 +19,6 @@ namespace guraburuEX.ViewModels
 		// 依存クラス
 		EpisodeSelectorModel _EpisodeSelectorModel;
 
-		ComicViewerModel _ComicViewerModel;
-
 		// BindingParameters
 		#region Width
 		private int _Width;
@@ -65,44 +63,30 @@ namespace guraburuEX.ViewModels
 				if (_EpisodeText == value)
 					return;
 				_EpisodeText = value;
-
-				UpdateEpisode(_EpisodeText);
-
 				RaisePropertyChanged(nameof(EpisodeText));
 			}
 		}
 		#endregion
 
 		// Commands
-		#region SelectorCommand
-		ListenerCommand<string> _SelectorCommand;
-		public ICommand SelectorCommand
-		{
-			get
-			{
-				if (_SelectorCommand == null)
-				{
-					_SelectorCommand = new ListenerCommand<string>(TurnEpisode);
-				}
-				return _SelectorCommand;
-			}
-		}
-		#endregion
+		//#region SelectorCommand
+		//ListenerCommand<string> _SelectorCommand;
+		//public ICommand SelectorCommand
+		//{
+		//	get
+		//	{
+		//		if (_SelectorCommand == null)
+		//		{
+		//			_SelectorCommand = new ListenerCommand<string>(TurnEpisode);
+		//		}
+		//		return _SelectorCommand;
+		//	}
+		//}
+		//#endregion
 
-		public EpisodeSelectorViewModel(ComicViewerModel inComicViewerModel)
+		public EpisodeSelectorViewModel()
 		{
-			_EpisodeSelectorModel = new EpisodeSelectorModel(this, inComicViewerModel);
-			EpisodeText = inComicViewerModel.GuraburuImege.Episode.ToString();
-		}
-
-		private void UpdateEpisode(string inEpisodeString)
-		{
-			_EpisodeSelectorModel.UpdateEpisode(inEpisodeString);
-		}
-
-		private void TurnEpisode(string inAdditionNumberText)
-		{
-			//EpisodeText = _EpisodeSelectorModel.TurnEpisode(inAdditionNumberText);
+			_EpisodeSelectorModel = new EpisodeSelectorModel();
 		}
 	}
 }

@@ -13,7 +13,6 @@
              >
     <StackPanel Orientation="Vertical">
         <StackPanel>
-            <TextBox x:Name="URLText" Text="{Binding TestValue,Mode=OneWay}"></TextBox>
             <Button Content="button" Command="{Binding OnButton}"></Button>
         </StackPanel>
         <StackPanel>

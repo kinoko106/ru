@@ -19,8 +19,6 @@ namespace guraburuEX.ViewModels
 	{
 		ComicViewerModel _ComicViewerModel;
 
-		PropertyChangedEventListener listener;
-
 		// viewmodel
 		#region EpisodeSelectorViewModel
 		public EpisodeSelectorViewModel _EpisodeSelectorViewModel;
@@ -73,20 +71,37 @@ namespace guraburuEX.ViewModels
 		#endregion
 
 		#region Image
-		//public BitmapImage _Image;
-		//public BitmapImage Image
-		//{
-		//	get
-		//	{ return _Image; }
-		//	set
-		//	{
-		//		if (_Image == value)
-		//			return;
-		//		_Image = value;
-		//		RaisePropertyChanged(nameof(Image));
-		//	}
-		//}
+		public BitmapImage _Image;
+		public BitmapImage Image
+		{
+			get
+			{ return _Image; }
+			set
+			{
+				if (_Image == value)
+					return;
+				_Image = value;
+				RaisePropertyChanged(nameof(Image));
+			}
+		}
 		#endregion
+
+		#region EpisodeText
+		private int _EpisodeText;
+		public int EpisodeText
+		{
+			get
+			{ return _EpisodeText; }
+			set
+			{
+				if (_EpisodeText == value)
+					return;
+				_EpisodeText = value;
+				RaisePropertyChanged(nameof(EpisodeText));
+			}
+		}
+		#endregion
+
 		#region SelectorCommand
 		ViewModelCommand _OnButton;
 		public ViewModelCommand OnButton
@@ -102,26 +117,17 @@ namespace guraburuEX.ViewModels
 		}
 		#endregion
 
-		public BitmapImage Image { get { return _ComicViewerModel.Image; } }
-		public int Episode { get { return _ComicViewerModel.Episode; } }
-		public string TestValue { get { return _ComicViewerModel.Episode.ToString(); } }
-
 		public ComicViewerViewModel()
 		{
 			_ComicViewerModel		  = new ComicViewerModel();
-			_EpisodeSelectorViewModel = new EpisodeSelectorViewModel(_ComicViewerModel);
-
-			listener = new PropertyChangedEventListener(_ComicViewerModel)
-			{
-				() => _ComicViewerModel.Episode,
-				(_,__)=> RaisePropertyChanged(()=> Image),
-				(_,__)=> RaisePropertyChanged(()=> TestValue)
-			};
+			_EpisodeSelectorViewModel = new EpisodeSelectorViewModel();
 		}
 
 		public void OnButtonMethod()
 		{
-			_ComicViewerModel.Episode++;
+			_ComicViewerModel.UpdateEpisode(1);
+			Image = _ComicViewerModel.Image;
+			EpisodeText = _ComicViewerModel.Episode;
 		}
 	}
 }
