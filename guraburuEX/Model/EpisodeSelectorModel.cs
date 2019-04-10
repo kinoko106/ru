@@ -10,15 +10,12 @@ namespace guraburuEX.Model
 {
 	class EpisodeSelectorModel
 	{
-		EpisodeSelectorViewModel _Parent;
-
 		public int Width	{ get; set; }
 		public int Height	{ get; set; }
 
 		public EpisodeSelectorModel()
 		{
-			_Parent.Height = 40;
-			_Parent.Width = AppConfigUtil.GetAppSettingInt("ImageWidth", 420);
+
 		}
 	}
 }

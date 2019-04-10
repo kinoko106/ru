@@ -24,7 +24,7 @@
             </ScrollViewer>
         </StackPanel>
         <StackPanel>
-            <component:EpisodeSelector DataContext="{Binding EpisodeSelectorViewModel}"></component:EpisodeSelector>
+            <component:EpisodeSelector DataContext="{Binding EpisodeText,Mode=TwoWay}"></component:EpisodeSelector>
         </StackPanel>
     </StackPanel>
 </UserControl>

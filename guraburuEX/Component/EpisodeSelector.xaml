@@ -11,6 +11,7 @@
              d:DesignWidth="{Binding Width}"
              Height="{Binding Height,Mode=TwoWay}" 
              Width="{Binding Width,Mode=TwoWay}"
+             x:Name="EpisodeSelectorBase"
              >
     <StackPanel Orientation="Horizontal" Background="LightGray">
         <Button x:Name="Increase" Width="40" Content="◀" Command="{Binding SelectorCommand}" CommandParameter="1"/>

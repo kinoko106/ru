@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using System.Windows.Input;
+using System.ComponentModel;
 
 using Livet;
 using Livet.Commands;
@@ -121,6 +122,14 @@ namespace guraburuEX.ViewModels
 		{
 			_ComicViewerModel		  = new ComicViewerModel();
 			_EpisodeSelectorViewModel = new EpisodeSelectorViewModel();
+
+			this.CompositeDisposable.Add(
+				new EventListener<PropertyChangedEventHandler>(
+					h => EpisodeSelectorViewModel.PropertyChanged += h,
+					h => EpisodeSelectorViewModel.PropertyChanged -= h,
+					(sender, e) => { test(); }
+					)
+				);
 		}
 
 		public void OnButtonMethod()
@@ -128,6 +137,11 @@ namespace guraburuEX.ViewModels
 			_ComicViewerModel.UpdateEpisode(1);
 			Image = _ComicViewerModel.Image;
 			EpisodeText = _ComicViewerModel.Episode;
+		}
+
+		private void test()
+		{
+
 		}
 	}
 }
